@@ -16,34 +16,27 @@
 });*/
 
 Route::get('/', function () {
-    return view('coming-soon');
+    return view('welcome');
 });
-
-Route::match(['get', 'post'], '/admin','AdminController@login');
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route Login and Logout
+Route::match(['get', 'post'], '/login','UserController@login');
+Route::get('/logout','UserController@logout');
 
+// Route Password
+Route::group(['middleware' => ['auth']],function(){	
+	Route::get('/settings','UserController@settings');
+	Route::get('/check-pwd','UserController@chkPassword');
+	Route::match(['get','post'],'/update-pwd','UserController@updatePassword');
+});
+
+// Route Dashboard
 Route::group(['middleware' => ['auth']],function(){
-	Route::get('/admin/dashboard','AdminController@dashboard');	
-	Route::get('/admin/settings','AdminController@settings');
-	Route::get('/admin/check-pwd','AdminController@chkPassword');
-	Route::match(['get','post'],'/admin/update-pwd','AdminController@updatePassword');
-
-	// Categories Routes (Admin)
-	Route::match(['get','post'],'/admin/add-category','CategoryController@addCategory');
-	Route::match(['get','post'],'/admin/edit-category/{id}','CategoryController@editCategory');
-	Route::match(['get','post'],'/admin/delete-category/{id}','CategoryController@deleteCategory');
-	Route::get('/admin/view-categories','CategoryController@viewCategories');
-
-	// Products Routes
-	Route::match(['get','post'],'/admin/add-product','ProductsController@addProduct');
-	Route::get('/admin/view-products','ProductsController@viewProducts');
+	Route::get('/dashboard','UserController@dashboard');
 });
 
 
-Route::get('/logout','AdminController@logout');
 
 
 

@@ -1,39 +1,33 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use Auth;
 use Session;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 
-class AdminController extends Controller
+class UserController extends Controller
 {
     public function login(Request $request){
         if($request->isMethod('post')){
             $data = $request->input();
-             if (Auth::attempt(['email' => $data['email'], 'password' => $data['password'],'admin' => '1'])) {
-                //echo "Success"; die;
-                /*Session::put('adminSession',$data['email']);*/
-                return redirect('/admin/dashboard');
+             if (Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
+                return redirect('dashboard');
             }else{
-                //echo "failed"; die;
-                return redirect('/admin')->with('flash_message_error','Invalid Username or Password');
+                return redirect('/user')->with('flash_message_error','Invalid Username or Password');
             }
         }
-        return view('admin.admin_login');
+        return view('auth.login');
     }
 
     public function dashboard(){
-        /*if(Session::has('adminSession')){
-            //Perform all dashboard tasks
-        }else{
-            return redirect('/admin')->with('flash_message_error','Please login to access');
-        }*/
-        return view('admin.dashboard');
+        return view('dashboard');
     }
 
     public function settings(){
-        return view('admin.settings');
+        return view('user.settings');
     }
 
     public function chkPassword(Request $request){
@@ -50,15 +44,14 @@ class AdminController extends Controller
     public function updatePassword(Request $request){
         if($request->isMethod('post')){
             $data = $request->all();
-            //echo "<pre>"; print_r($data); die;
             $check_password = User::where(['email' => Auth::user()->email])->first();
             $current_password = $data['current_pwd'];
             if(Hash::check($current_password,$check_password->password)){
                 $password = bcrypt($data['new_pwd']);
                 User::where('id','1')->update(['password'=>$password]);
-                return redirect('/admin/settings')->with('flash_message_success','Password updated Successfully!');
+                return redirect('/settings')->with('flash_message_success','Password updated Successfully!');
             }else {
-                return redirect('/admin/settings')->with('flash_message_error','Incorrect Current Password!');
+                return redirect('/settings')->with('flash_message_error','Incorrect Current Password!');
             }
         }
     }
@@ -66,6 +59,6 @@ class AdminController extends Controller
 
     public function logout(){
         Session::flush();
-        return redirect('/admin')->with('flash_message_success','Logged out Successfully'); 
+        return redirect('/login')->with('flash_message_success','Logged out Successfully'); 
     }
 }
