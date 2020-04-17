@@ -7,21 +7,34 @@ $(document).ready(function(){
 	
 	// Form Validation
     $("#basic_validate").validate({
+	});
+	
+	// Add Channel
+    $("#add_channel").validate({
 		rules:{
-			required:{
-				required:true
-			},
-			email:{
+			name:{
 				required:true,
-				email: true
+				name: true
 			},
-			date:{
+			device_type:{
 				required:true,
-				date: true
+				device_type: true
 			},
-			url:{
+			micon_type:{
 				required:true,
-				url: true
+				micon_type: true
+			},
+			metadata:{
+				required:true,
+				metadata: true
+			},			
+			description:{
+				required:true,
+				description: true
+			},		
+			api_id:{
+				required:true,
+				api_id: true
 			}
 		},
 		errorClass: "help-inline",
@@ -35,6 +48,49 @@ $(document).ready(function(){
 		}
 	});
 	
+
+    $("#edit_channel").validate({
+		rules:{
+			name:{
+				required:true,
+				name: true
+			},
+			device_type:{
+				required:true,
+				device_type: true
+			},
+			micon_type:{
+				required:true,
+				micon_type: true
+			},
+			metadata:{
+				required:true,
+				metadata: true
+			},			
+			description:{
+				required:true,
+				description: true
+			}		
+			
+		},
+		errorClass: "help-inline",
+		errorElement: "span",
+		highlight:function(element, errorClass, validClass) {
+			$(element).parents('.control-group').addClass('error');
+		},
+		unhighlight: function(element, errorClass, validClass) {
+			$(element).parents('.control-group').removeClass('error');
+			$(element).parents('.control-group').addClass('success');
+		}
+	});
+	
+	$("#delCha").click(function(){
+		if(confirm('Are you sure you want to delete this Channel?')){
+			return true;
+		}
+		return false;
+	});
+
 	$("#number_validate").validate({
 		rules:{
 			min:{

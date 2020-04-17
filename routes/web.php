@@ -34,9 +34,17 @@ Route::group(['middleware' => ['auth']],function(){
 // Route Dashboard
 Route::group(['middleware' => ['auth']],function(){
 	Route::get('/dashboard','UserController@dashboard');
+
+
+//Route Channel
+	Route::match(['get','post'],'/channels/add-channels','ChannelController@addChannel');
+	Route::match(['get','post'],'/channels/edit-channel/{channel_id}','ChannelController@editChannel');
+	Route::match(['get','post'],'/channels/delete-channel/{channel_id}','ChannelController@deleteChannel');
+	Route::get('/channels/view-channel','ChannelController@viewChannel');
+
+//Route Field
+	Route::match(['get','post'],'/channels/add-field','FieldController@addField');
 });
-
-
 
 
 
