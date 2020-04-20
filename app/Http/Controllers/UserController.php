@@ -10,18 +10,6 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function login(Request $request){
-        if($request->isMethod('post')){
-            $data = $request->input();
-             if (Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
-                return redirect('dashboard');
-            }else{
-                return redirect('/user')->with('flash_message_error','Invalid Username or Password');
-            }
-        }
-        return view('auth.login');
-    }
-
     public function dashboard(){
         return view('dashboard');
     }
@@ -55,7 +43,6 @@ class UserController extends Controller
             }
         }
     }
-
 
     public function logout(){
         Session::flush();

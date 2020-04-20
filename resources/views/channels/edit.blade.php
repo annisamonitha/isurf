@@ -13,34 +13,34 @@
             <h5>Edit Channels</h5>
           </div>
           <div class="widget-content nopadding">
-            <form class="form-horizontal" method="post" action="{{ url('/channels/edit-channel/'.$channelDetails->channel_id) }}" name="edit_channel" id="edit_channel" novalidate="novalidate"> {{ csrf_field() }}
+            <form class="form-horizontal" method="post"  action="{{ route('channel.update', $channel->id) }}" name="edit_channel" id="edit_channel" novalidate="novalidate"> {{ csrf_field() }}
               <div class="control-group">
                 <label class="control-label">Sensor Name</label>
                 <div class="controls">
-                  <input type="text" name="name" id="name" value="{{ $channelDetails->name}}">
+                  <input type="text" name="name" id="name" value="{{ $channel->name}}">
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label">Device Type</label>
                 <div class="controls">
-                  <input type="text" name="device_type" id="device_type" value="{{ $channelDetails->device_type}}">
+                  <input type="text" name="device_type" id="device_type" value="{{ $channel->device_type}}">
                 </div>
               <div class="control-group">
                 <label class="control-label">Micon Type</label>
                 <div class="controls">
-                  <input type="text" name="micon_type" id="micon_type" value="{{ $channelDetails->micon_type}}">
+                  <input type="text" name="micon_type" id="micon_type" value="{{ $channel->micon_type}}">
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label">Metadata</label>
                 <div class="controls">
-                  <input type="text" name="metadata" id="metadata" value="{{ $channelDetails->metadata}}">
+                  <input type="text" name="metadata" id="metadata" value="{{ $channel->metadata}}">
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label">Description</label>
                 <div class="controls">
-                  <textarea name="description" id="description"> {{ $channelDetails->description}} </textarea>
+                 <textarea name="description" id="description"> {{ $channel->description}} </textarea>
                 </div>
               </div>
               <!--<div class="control-group">
@@ -54,7 +54,7 @@
                   <input type="text" name="api_id" id="api_id">
                 </div>-->
               <div class="form-actions">
-                <input type="submit" value="Edit Channel" class="btn btn-success">
+                <input type="submit" value="Update" class="btn btn-success">
               </div>
             </form>
           </div>

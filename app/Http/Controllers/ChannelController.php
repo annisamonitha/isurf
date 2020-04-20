@@ -3,47 +3,55 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 use App\Channel;
+use App\Tag;
 
 class ChannelController extends Controller
 {
-    public function addChannel(Request $request){
-        if($request->isMethod('post')){
-            $data = $request->all();
-           // echo "<pre>"; print_r($data); die;
-           $channel = new Channel;
-           $channel->name = $data['name'];
-           $channel->parent_id = $data['parent_id'];
-           $channel->device_type = $data['device_type'];
-           $channel->micon_type = $data['micon_type'];
-           $channel->metadata = $data['metadata'];
-           $channel->description = $data['description'];
-          // $channel->status = $data['status'];
-           $channel->save();
-           return redirect('/channels/view-channel')->with('flash_message_success','Channel added Successfully!');
-        }
-        $levels = Channel::where(['parent_id'=>0])->get();
-        return view('channels.add_channels')->with(compact('levels'));
-    }
-    public function editChannel(Request $request, $channel_id=null){
-        if($request->isMethod('post')){
-            $data = $request->all();
-            //echo "<pre>"; print_r($data); die;
-            Channel::where(['channel_id'=>$channel_id])->update(['name'=>$data['name'],'device_type'=>$data['device_type'],'micon_type'=>$data['micon_type'],'metadata'=>$data['metadata'],'description'=>$data['description']]);
-            return redirect('/channels/view-channel')->with('flash_message_success','Channel Updated successfully!');
-        }
-        $channelDetails = Channel::where(['channel_id'=>$channel_id])->first();
-        return view('channels.edit_channel')->with(compact('channelDetails'));
+    public function index(){
+        $data_channel = \App\Channel::all();  
+        //return view('channel.index', ['channel' => $channel->paginate(15)]);
+    	return view('channels.index',['data_channel' => $data_channel]);
     }
 
-    public function deleteChannel($channel_id = null){
-        if(!empty($channel_id)){
-            Channel::where(['channel_id'=>$channel_id])->delete();
-            return redirect()->back()->with('flash_message_success','Channel Deleted Successfully!');
-        }
+    public function create(){
+        $tag = Tag::all();
+        //dd($tag);
+    	return view('channels.create',compact('tag'));
     }
-    public function viewChannel(){
-        $channel = Channel::get();
-        return view('channels.view_channel')->with(compact('channel'));
+
+     public function store(Request $request){
+        $channel = new Channel;
+        $channel->name = $request['name'];
+        $channel->device_type = $request['device_type'];
+        $channel->micon_type = $request['micon_type'];
+        $channel->metadata = $request['metadata'];
+        $channel->description = $request['description'];
+        //$tag->tag = $request['tag'];
+        //$channel->field = $request['field']
+        $channel->save();
+    	//\App\Channel::create($request->all());
+    	return redirect('/channel')->with('flash_message_success','Channel added Successfully!');
     }
+
+    public function edit($id){
+
+    	$channel = Channel::find($id);
+    	return view('channels.edit',['channel' => $channel]);
+    }
+
+    public function update(Request $request, $id){
+    	$channel = \App\Channel::find($id);
+    	$channel->update($request->all());
+    	return redirect('/channel')->with('flash_message_success','Channel updated Successfully!');
+    }
+
+     public function delete($id){
+    	$channel = \App\Channel::find($id);
+    	$channel->delete();
+    	return redirect('/channel')->with('flash_message_success','Channel Deleted Successfully!');
+    }
+
 }
+

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFieldTable extends Migration
+class CreateChannelTagTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateFieldTable extends Migration
      */
     public function up()
     {
-        Schema::create('field', function (Blueprint $table) {
-        $table->increments('field_id');
-        $table->string('label');
-        $table->string('parent_id');
-        $table->timestamps();
+        Schema::create('channel_tag', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->integer('channel_id')->unsigned();
+            $table->integer('tag_id')->unsigned();
         });
     }
 
@@ -28,6 +27,6 @@ class CreateFieldTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('field');
+        Schema::dropIfExists('channel_tag');
     }
 }

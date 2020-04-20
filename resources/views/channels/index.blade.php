@@ -33,20 +33,30 @@
                 <tr>
                   <th>Sensor Name</th>
                   <th>Device Type</th>
-                  <th>Micon Type</th>
+                  <th>Micocontroller Type</th>
                   <th>Metadata</th>
                   <th>Description</th>
+                  <th>Tags</th>
                 </tr>
               </thead>
               <tbody>
-              @foreach($channel as $channel) 
+              @foreach($data_channel as $data_channel) 
               <tr class="odd gradeX">
-                  <td>{{ $channel->name }}</td>
-                  <td>{{ $channel->device_type }}</td>
-                  <td>{{ $channel->micon_type }}</td>
-                  <td>{{ $channel->metadata }}</td>
-                  <td>{{ $channel->description }}</td>
-                  <td class= "center"> <a href="{{ url('/channels/edit-channel/'.$channel->channel_id) }}" class="btn btn-primary btn-mini">Edit</a> <a id="delCha" href="{{ url('/channels/delete-channel/'.$channel->channel_id) }}" class="btn btn-danger btn-mini">Delete</a> </td>
+                  <td>{{ $data_channel->name }}</td>
+                  <td>{{ $data_channel->device_type }}</td>
+                  <td>{{ $data_channel->micon_type }}</td>
+                  <td>{{ $data_channel->metadata }}</td>
+                  <td>{{ $data_channel->description }}</td>
+                  <td>
+                    @if ($data_channel->tag->isNotEmpty())
+                      @foreach($data_channel->tag as $tag)
+                        {{ $tag->name }}
+                      @endforeach
+                    @else 
+                      <i>No Tag<i>
+                    @endif
+                  </td>
+                  <td class= "center"> <a href="/channel/{{$data_channel->id}}/edit" class="btn btn-primary btn-mini">Edit</a> <a id="delCha" href="/channel/{{$data_channel->id}}/delete" class="btn btn-danger btn-mini" onclick="return confirm('Are you sure want to delete this data?')" >Delete</a> </td>
                 </tr>
               @endforeach
                </tbody>

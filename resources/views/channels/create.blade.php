@@ -14,7 +14,8 @@
             <h5>Add Channels</h5>
           </div>
           <div class="widget-content nopadding">
-            <form class="form-horizontal" method="post" action="{{ url('/channels/add-channels') }}" name="add_channels" id="basic_validate" novalidate="novalidate"> {{ csrf_field() }}
+            <form class="form-horizontal" method="post" action="{{ route('channel.store') }}">
+              @csrf
               <div class="control-group">
                 <label class="control-label">Sensor Name</label>
                 <div class="controls">
@@ -33,18 +34,6 @@
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">Channel Category</label>
-                <div class="controls">
-                  <select name="parent_id">
-                    <option value="0">Main Channel Category</option>
-                    <!--@foreach($levels as $val)
-                    <option value="{{ $val->parent_id }}">{{ $val->name}}</option>
-                    @endforeach-->
-                </select>
-              </div>    
-              </div>
-              
-              <div class="control-group">
                 <label class="control-label">Metadata</label>
                 <div class="controls">
                   <input type="text" name="metadata" id="metadata">
@@ -55,6 +44,13 @@
                 <div class="controls">
                   <textarea name="description" id="description"></textarea>
                 </div>
+              </div>
+              <div class="control-group">
+                <label>Tag</label>
+                @foreach($tag as $tag)
+                <input type="text" id="tag" name="tag">
+                  </input>
+                  @endforeach
               </div>
               <!--<div class="control-group">
                 <label class="control-label">Status</label>
@@ -67,7 +63,7 @@
                   <input type="text" name="api_id" id="api_id">
                 </div>-->
               <div class="form-actions">
-                <input type="submit" value="Add Channel" class="btn btn-success">
+                <input type="submit" value="Create" class="btn btn-success">
               </div>
             </form>
           </div>
