@@ -33,10 +33,9 @@
                 <tr>
                   <th>Sensor Name</th>
                   <th>Device Type</th>
-                  <th>Micocontroller Type</th>
+                  <th>Microcontroller Type</th>
                   <th>Metadata</th>
                   <th>Description</th>
-                  <th>Tags</th>
                 </tr>
               </thead>
               <tbody>
@@ -47,15 +46,8 @@
                   <td>{{ $data_channel->micon_type }}</td>
                   <td>{{ $data_channel->metadata }}</td>
                   <td>{{ $data_channel->description }}</td>
-                  <td>
-                    @if ($data_channel->tag->isNotEmpty())
-                      @foreach($data_channel->tag as $tag)
-                        {{ $tag->name }}
-                      @endforeach
-                    @else 
-                      <i>No Tag<i>
-                    @endif
-                  </td>
+
+                  <td><a href="{{ route('field.create', $data_channel->id) }}" class="btn btn-primary btn-mini"> Field </a></td>
                   <td class= "center"> <a href="/channel/{{$data_channel->id}}/edit" class="btn btn-primary btn-mini">Edit</a> <a id="delCha" href="/channel/{{$data_channel->id}}/delete" class="btn btn-danger btn-mini" onclick="return confirm('Are you sure want to delete this data?')" >Delete</a> </td>
                 </tr>
               @endforeach
