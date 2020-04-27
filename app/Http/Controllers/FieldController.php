@@ -25,4 +25,21 @@ class FieldController extends Controller
         return redirect()->back()->with('flash_message_success','Field added Successfully!');
     }
 
+    public function edit($id){
+        $field = Field::find($id);
+        return view('field.create',['field' => $field]);
+    }
+
+    public function update(Request $request, $id){
+        $field = Field::find($id);
+        $field->update($request->all());
+        return redirect()->back()->with('flash_message_success','Field updated Successfully!');
+    }
+
+     public function delete($id){
+        $field = Field::find($id);
+        $field->delete();
+        return redirect()->back()->with('flash_message_success','Field Deleted Successfully!');
+    }
+
 }

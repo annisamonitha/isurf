@@ -17,7 +17,7 @@
         </div>
     @endif   
 
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ModalAdd">
   + Fields </button>
   </div>
   <div class="container-fluid">
@@ -40,7 +40,10 @@
               @foreach($data_field as $data_field)
               <tr class="odd gradeX">
                   <td>{{ $data_field->name }}</td>
-                  <td class= "center"> <a href="" class="btn btn-primary btn-mini">Edit</a> <a id="delCha" href="" class="btn btn-danger btn-mini" onclick="return confirm('Are you sure want to delete this data?')" >Delete</a> </td>
+                  <td class= "center"> 
+                    <a type="button" class="btn btn-primary btn-mini" data-toggle="modal" data-target="#ModalEdit">Edit</a> 
+                    <a id="delCha" href="/field/{{$data_field->id}}/delete" class="btn btn-danger btn-mini" onclick="return confirm('Are you sure want to delete this data?')" >Delete</a> 
+                  </td>
                 </tr>
               @endforeach
                </tbody>
@@ -53,8 +56,8 @@
 </div>
 @endsection
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal Add Field -->
+<div class="modal fade" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -70,6 +73,42 @@
                 <label class="control-label">Name </label>
                 <div class="controls">
                   <input type="text" name="name" id="name">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label"></label>
+                <div class="controls">
+                  <input type="hidden" value= {{$id}} name="id" id="id">
+                </div>
+              </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Edit Field -->
+<div class="modal fade" id="ModalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalEdit"> EDIT FIELD </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+       <form class="form-horizontal" method="POST" action="{{ route('field.update', $data_field->id) }}">
+        @csrf
+      <div class="modal-body">
+              <div class="control-group">
+                <label class="control-label">Name </label>
+                <div class="controls">
+                  <input type="text" value="{{ $data_field->name }}" name="name" id="name">
                 </div>
               </div>
               <div class="control-group">

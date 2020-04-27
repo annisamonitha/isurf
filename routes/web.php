@@ -48,9 +48,9 @@ Route::group(['middleware' => ['auth']],function(){
 Route::group(['middleware' => ['auth']],function(){	
 	Route::get('/channel/{id}/field','FieldController@create')->name('field.create');
 	Route::post('/channel/field','FieldController@store')->name('field.store');
-	//Route::get('/channel/{id}/edit','ChannelController@edit')->name('channel.edit');
-	//Route::post('/channel/{id}/update','ChannelController@update')->name('channel.update');
-	//Route::get('/channel/{id}/delete','ChannelController@delete')->name('channel.delete');
+	Route::get('/field/{id}/edit','FieldController@edit')->name('field.edit');
+	Route::post('/field/{id}/update','FieldController@update')->name('field.update');
+	Route::get('/field/{id}/delete','FieldController@delete')->name('field.delete');
 });
 
 // Route Untuk Edit Profile User
