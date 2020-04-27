@@ -46,9 +46,8 @@ Route::group(['middleware' => ['auth']],function(){
 
 //Route Fields
 Route::group(['middleware' => ['auth']],function(){	
-	//Route::get('/field/{id}','FieldController@index')->name('field.index');
-	Route::get('/field/{id}/create','FieldController@create')->name('field.create');
-	Route::post('/field/{id}/create','FieldController@store')->name('field.store');
+	Route::get('/channel/{id}/field','FieldController@create')->name('field.create');
+	Route::post('/channel/field','FieldController@store')->name('field.store');
 	//Route::get('/channel/{id}/edit','ChannelController@edit')->name('channel.edit');
 	//Route::post('/channel/{id}/update','ChannelController@update')->name('channel.update');
 	//Route::get('/channel/{id}/delete','ChannelController@delete')->name('channel.delete');

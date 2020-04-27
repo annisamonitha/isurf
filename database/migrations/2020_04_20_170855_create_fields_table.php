@@ -18,6 +18,8 @@ class CreateFieldsTable extends Migration
             $table->string('name');
             $table->unsignedBigInteger('channel_id');
             $table->foreign('channel_id')->references('id')->on('channels');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

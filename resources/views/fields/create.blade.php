@@ -37,9 +37,9 @@
                 </tr>
               </thead>
               <tbody>
-              @foreach($field as $field)
+              @foreach($data_field as $data_field)
               <tr class="odd gradeX">
-                  <td>{{ $field->name }}</td>
+                  <td>{{ $data_field->name }}</td>
                   <td class= "center"> <a href="" class="btn btn-primary btn-mini">Edit</a> <a id="delCha" href="" class="btn btn-danger btn-mini" onclick="return confirm('Are you sure want to delete this data?')" >Delete</a> </td>
                 </tr>
               @endforeach
@@ -63,13 +63,19 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+       <form class="form-horizontal" method="POST" action="{{ route('field.store'), $id }}">
+        @csrf
       <div class="modal-body">
-         <form class="form-horizontal" method="post" action="">
-              @csrf
               <div class="control-group">
-                <label class="control-label">Name</label>
+                <label class="control-label">Name </label>
                 <div class="controls">
                   <input type="text" name="name" id="name">
+                </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label"></label>
+                <div class="controls">
+                  <input type="hidden" value= {{$id}} name="id" id="id">
                 </div>
               </div>
       </div>
@@ -77,7 +83,7 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary">Save</button>
       </div>
-      </form>
+    </form>
     </div>
   </div>
 </div>
