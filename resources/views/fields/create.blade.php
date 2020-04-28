@@ -41,7 +41,7 @@
               <tr class="odd gradeX">
                   <td>{{ $data_field->name }}</td>
                   <td class= "center"> 
-                    <a type="button" class="btn btn-primary btn-mini" data-toggle="modal" data-target="#ModalEdit">Edit</a> 
+                    <a data-field_id="{{$data_field->id}}" data-name="{{$data_field->name}}" type="button" class="btn btn-primary btn-mini" data-toggle="modal" data-target="#ModalEdit">Edit</a> 
                     <a id="delCha" href="/field/{{$data_field->id}}/delete" class="btn btn-danger btn-mini" onclick="return confirm('Are you sure want to delete this data?')" >Delete</a> 
                   </td>
                 </tr>
@@ -97,32 +97,49 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="ModalEdit"> EDIT FIELD </h5>
+        <h5 class="modal-title" id="exampleModalLabel"> EDIT FIELD </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-       <form class="form-horizontal" method="POST" action="{{ route('field.update', $data_field->id) }}">
-        @csrf
       <div class="modal-body">
+       <form class="form-horizontal" method="POST" action="{{ route('field.update', 'field_id' )}}">
+        @csrf
+        @method('PUT')
               <div class="control-group">
                 <label class="control-label">Name </label>
                 <div class="controls">
-                  <input type="text" value="{{ $data_field->name }}" name="name" id="name">
+                  <input type="text" name="name" id="name">
                 </div>
               </div>
               <div class="control-group">
                 <label class="control-label"></label>
                 <div class="controls">
-                  <input type="hidden" value= {{$id}} name="id" id="id">
+                  <input type="hidden" name="field_id" id="field_id">
                 </div>
               </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary">Update</button>
       </div>
     </form>
     </div>
   </div>
 </div>
+
+<script>
+$('#ModalEdit').on('show.bs.modal', function(event){
+
+var button = $(event.relatedTarget)
+var name = button.data('name')
+var field_id = button.data('field_id')
+
+var modal = $(this)
+
+modal.find('.modal-title').text('EDIT FIELD INFO');
+modal.find('.modal-body #name').val(name)
+modal.find('.modal-body #field').val(field_id)
+
+})
+</script>

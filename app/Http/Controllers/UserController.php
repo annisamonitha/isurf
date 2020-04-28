@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Session;
 use App\User;
-use Illuminate\Support\Facades\Hash;
+use Hash;
 
 class UserController extends Controller
 {
@@ -18,30 +18,24 @@ class UserController extends Controller
         return view('user.settings');
     }
 
-    public function chkPassword(Request $request){
-        $data = $request->all();
-        $current_password = $data['current_pwd'];
-        $check_password = User::where(['admin'=>'1'])->first();
-        if(Hash::check($current_password,$check_password->password)){
-            echo "true"; die;
-        }else {
-            echo "false"; die;
+    public function changePassword(Request $request){
+        
+        if(!(Hash::check($request->get('current_password'), Auth::user()->password))){
+            return back()->with('flash_message_error','Your current password does not match with what you provided');
         }
-    }
+        if(strcmp($request->get('current_password'), $request->get('new_password'))==0) {
+          return back()->with('flash_message_error','Your new password cannot be same with the current password');  
+        }
 
-    public function updatePassword(Request $request){
-        if($request->isMethod('post')){
-            $data = $request->all();
-            $check_password = User::where(['email' => Auth::user()->email])->first();
-            $current_password = $data['current_pwd'];
-            if(Hash::check($current_password,$check_password->password)){
-                $password = bcrypt($data['new_pwd']);
-                User::where('id','1')->update(['password'=>$password]);
-                return redirect('/settings')->with('flash_message_success','Password updated Successfully!');
-            }else {
-                return redirect('/settings')->with('flash_message_error','Incorrect Current Password!');
-            }
-        }
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|string|min:6|confirmed'
+        ]);
+
+        $user = Auth::user();
+        $user->password = bcrypt($request->get('new_password'))->save();
+
+        return back()->with('flash_message_success','Password Changed Successfully'); 
     }
 
     public function logout(){

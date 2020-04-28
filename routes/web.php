@@ -30,8 +30,8 @@ Route::get('/logout','UserController@logout');
 // Route Password
 Route::group(['middleware' => ['auth']],function(){	
 	Route::get('/settings','UserController@settings');
-	Route::get('/check-pwd','UserController@chkPassword');
-	Route::match(['get','post'],'/update-pwd','UserController@updatePassword');
+	Route::get('/changepassword','UserController@changeassword')->name('changePassword');
+	Route::post('/changepassword','UserController@changePassword')->name('changePassword');
 });
 
 //Route Channels
@@ -48,7 +48,7 @@ Route::group(['middleware' => ['auth']],function(){
 Route::group(['middleware' => ['auth']],function(){	
 	Route::get('/channel/{id}/field','FieldController@create')->name('field.create');
 	Route::post('/channel/field','FieldController@store')->name('field.store');
-	Route::get('/field/{id}/edit','FieldController@edit')->name('field.edit');
+	//Route::get('/field/{id}/edit','FieldController@edit')->name('field.edit');
 	Route::post('/field/{id}/update','FieldController@update')->name('field.update');
 	Route::get('/field/{id}/delete','FieldController@delete')->name('field.delete');
 });

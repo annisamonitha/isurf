@@ -45,14 +45,13 @@
                   <textarea name="description" id="description"></textarea>
                 </div>
               </div>
-              <div class="control-group">
+              <!--<div class="control-group">
                 <label class="control-label">Tags</label>
                 <div class="controls">
                   <input type="text" name="tag" id="tag">
                 </div>
               </div>
-              
-              <!--<div class="control-group">
+              <div class="control-group">
                 <label class="control-label">Status</label>
                 <div class="controls">
                   <input type="text" name="status" id="status">

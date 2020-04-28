@@ -25,6 +25,13 @@ class ChannelController extends Controller
     }
 
      public function store(Request $request){
+
+        $this->validate($request,[
+            'name' => 'required',
+            'device_type' => 'required',
+            'micon_type' => 'required',
+        ]);
+
         $iduser = Auth::user()->id;
         $channel = new Channel;
         $channel->user_id = $iduser;
