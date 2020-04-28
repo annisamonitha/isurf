@@ -53,6 +53,8 @@ Route::group(['middleware' => ['auth']],function(){
 	Route::get('/field/{id}/delete','FieldController@delete')->name('field.delete');
 });
 
+//Route grafik
+Route::get('chart', 'ChartController@index');
 // Route Untuk Edit Profile User
 //Route::group(['middleware' => 'auth'], function () {
 	//Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);

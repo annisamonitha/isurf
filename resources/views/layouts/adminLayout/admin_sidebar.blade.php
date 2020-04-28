@@ -8,7 +8,7 @@
         <li><a href="{{ route('channel.index') }}">View Channels</a></li>
        </ul>
     </li>
-    <li><a href="buttons.html"><i class="icon icon-tint"></i> <span>Visualisation</span></a></li>
+    <li><a href="/chart"><i class="icon icon-tint"></i> <span>Visualisation</span></a></li>
     
     <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>Profile</span> <span class="label label-important">V</span></a>
       <ul>
